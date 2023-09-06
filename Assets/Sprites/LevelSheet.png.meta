@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 361fb6dd3bae36a44b517653eb99f597
+guid: 77020591ad5beec4d89e3336c8b9088d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,7 +107,28 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: New Piskel (1)_0
+      name: LevelSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 347a292e09b3aff40b6a230fe11170b0
+      internalID: -1367200927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LevelSheet_1
       rect:
         serializedVersion: 2
         x: 16
@@ -121,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30fad28ed2e5f6445b61f37ccd379d96
-      internalID: -2030266601
+      spriteID: d912b9cb8635aed45ad3dd98cf1cc1a0
+      internalID: 1281727844
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New Piskel (1)_1
+      name: LevelSheet_2
       rect:
         serializedVersion: 2
         x: 32
@@ -142,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7a9f72ae0e2b07489a4db0ad2fef5f7
-      internalID: 1405119479
+      spriteID: 4be272c06cfa1684884eabc5457fb3f7
+      internalID: 1748718622
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New Piskel (1)_2
+      name: LevelSheet_3
       rect:
         serializedVersion: 2
         x: 0
@@ -163,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5d15edfddbd5044fa118ab84834e8c3
-      internalID: -953913605
+      spriteID: 37634adedfdd84e48ad924fc719e2d7c
+      internalID: 1475482005
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New Piskel (1)_3
+      name: LevelSheet_4
       rect:
         serializedVersion: 2
         x: 16
@@ -184,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f8f2c92941d8564ca704424e5faaa9d
-      internalID: 1683842303
+      spriteID: 1f983e61489c69143a249ad575bb5045
+      internalID: -1024370855
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New Piskel (1)_4
+      name: LevelSheet_5
       rect:
         serializedVersion: 2
         x: 32
@@ -205,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 264e8e6700183a7468530751c2f86c39
-      internalID: 1711910792
+      spriteID: f70913d52dc6d8f46a3cbc9796755c58
+      internalID: 413526246
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New Piskel (1)_5
+      name: LevelSheet_6
       rect:
         serializedVersion: 2
         x: 0
@@ -226,8 +247,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 995bc8482b2b5e94982edc24bb5c3bbd
-      internalID: 1668352801
+      spriteID: 6ede7a4086e7b0b47b1f00eaa572e9bb
+      internalID: 927701695
       vertices: []
       indices: 
       edges: []
@@ -243,12 +264,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      New Piskel (1)_0: -2030266601
-      New Piskel (1)_1: 1405119479
-      New Piskel (1)_2: -953913605
-      New Piskel (1)_3: 1683842303
-      New Piskel (1)_4: 1711910792
-      New Piskel (1)_5: 1668352801
+      LevelSheet_0: -1367200927
+      LevelSheet_1: 1281727844
+      LevelSheet_2: 1748718622
+      LevelSheet_3: 1475482005
+      LevelSheet_4: -1024370855
+      LevelSheet_5: 413526246
+      LevelSheet_6: 927701695
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

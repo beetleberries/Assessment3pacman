@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: New Piskel (1)_2
+  m_Name: LevelSheet_6
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -953913605, guid: 361fb6dd3bae36a44b517653eb99f597, type: 3}
+  m_Sprite: {fileID: 927701695, guid: 77020591ad5beec4d89e3336c8b9088d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
