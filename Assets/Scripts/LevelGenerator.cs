@@ -34,53 +34,145 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
 
-        BuildLevel();
-        
+        BuildLevel();        
     }
 
     void BuildLevel()
     {
-        for (int x = 0; x < levelMap.GetLength(0); x++)
+        for (int x = 0; x < levelMap.GetLength(0) * 2 - 1; x++)
         {
-            for (int y = 0; y < levelMap.GetLength(1); y++)
+            for (int y = 0; y < levelMap.GetLength(1) * 2; y++)
             {
-                int type = getType(x,y);
+                placeTile(x, y);
 
-                tilemap.SetTile(new Vector3Int(y - 5, 4 - x,0), tiles[type]);
-
-                Matrix4x4 m = Matrix4x4.Rotate(getRotation(type, x, y));
-                tilemap.SetTransformMatrix(new Vector3Int(y - 5, 4 - x,0),m);
             }
         }
     }
 
-    private int getType(int x, int y)
+    private void placeTile(int x, int y)
     {
-        x = Math.Min(levelMap.GetLength(0), x);
-        y = Math.Min(levelMap.GetLength(1), y);
+        int type = readMap(x,y);
+
+        tilemap.SetTile(new Vector3Int(y, -x, 0), tiles[type]);
+        Matrix4x4 m = Matrix4x4.Rotate(getRotation(type, x, y));
+        tilemap.SetTransformMatrix(new Vector3Int(y, -x, 0),m);
+    }
+
+    private int readMap(int x, int y)
+    {
+        x = (x >= levelMap.GetLength(0)) ? levelMap.GetLength(0) * 2 - 2 - x : x;
+        y = (y >= levelMap.GetLength(1)) ? levelMap.GetLength(1) * 2 - 1 - y : y;
+        if (x < 0 || y < 0) return 0;
         return levelMap[x, y];
     }
 
     private Quaternion getRotation(int type, int x, int y)
     {
+        int downt = readMap(x+1,y);
+        bool down = downt == 5 || downt == 6 || downt == 0;
+        int upt = readMap(x-1,y);
+        bool up = upt == 5 || upt == 6 || upt == 0;
+        int rightt = readMap(x,y+1);
+        bool right = rightt == 5 || rightt == 6 || rightt == 0;
+        int leftt = readMap(x,y-1);
+        bool left = leftt == 5 || leftt == 6 || leftt == 0;
+
+        if (type == 1)
+        {
+            if (downt == 2 && leftt == 2) return Quaternion.Euler(0, 0, 270);
+            if (upt == 2 && rightt == 2) return Quaternion.Euler(0, 0, 90);
+            if (upt == 2 && leftt == 2) return Quaternion.Euler(0, 0, 180);
+        }
         if (type == 2)
         {
-            int below = getType(x+1,y);
-            if (below == 5 || below == 0) return Quaternion.Euler(0, 0, 90);
+            if (rightt == 2 || rightt == 1 || leftt == 2 || leftt == 1) return Quaternion.Euler(0, 0, 90);
+        }
+        if (type == 3)
+        {
+            //wall below pointing at this tile?
+            if (downt == 4 && getRotation(downt, x+1, y).Equals(Quaternion.identity))
+            {
+                //wall to the right?
+                if (rightt == 4 && getRotation(rightt, x, y+1).Equals(Quaternion.Euler(0, 0, 90)))
+                {
+                    return Quaternion.identity;
+                }
+                //wall to the left?
+                if (leftt == 4 && getRotation(leftt, x, y-1).Equals(Quaternion.Euler(0, 0, 90)))
+                {
+                    return Quaternion.Euler(0, 0, 270);
+                }
+
+            }
+
+            //if wall above?
+            if (upt == 4 && getRotation(upt, x-1, y).Equals(Quaternion.identity))
+            {
+                //wall to the right?
+                if (rightt == 4 && getRotation(rightt, x, y+1).Equals(Quaternion.Euler(0, 0, 90)))
+                {
+                    return Quaternion.Euler(0, 0, 90);
+                }
+                //wall to the left?
+                if (leftt == 4 && getRotation(leftt, x, y-1).Equals(Quaternion.Euler(0, 0, 90)))
+                {
+                    return Quaternion.Euler(0, 0, 180);
+                }
+
+            }
+
+
+            if ((downt == 4 || downt == 3) && (leftt == 4 || leftt == 3)) return Quaternion.Euler(0, 0, 270);
+            if ((upt == 4 || upt == 3) && (rightt == 4 || rightt == 3)) return Quaternion.Euler(0, 0, 90);
+            if ((upt == 4 || upt == 3) && (leftt == 4 || leftt == 3)) return Quaternion.Euler(0, 0, 180);
         }
         if (type == 4)
         {
-            int below = getType(x+1,y);
-            if (below == 5 || below == 0) return Quaternion.Euler(0, 0, 90);
+            if (down || up) return Quaternion.Euler(0, 0, 90);
+        }
+
+        if (type == 7)
+        {
+            int flip = 0;
+            if (leftt == 2 || leftt == 1)
+            {
+                if (upt == 4 || upt == 3)
+                {
+                    flip = 180;
+                }
+                return Quaternion.Euler(flip, 0, 270);
+            }
+            if (rightt == 2 || rightt == 1)
+            {
+                if (downt == 4 || downt == 3)
+                {
+                    flip = 180;
+                }
+                return Quaternion.Euler(flip, 0, 90);
+            }
+
+            //for marking not used in given level.
+            if (downt == 2 || downt == 1)
+            {
+                if (leftt == 4 || leftt == 3)
+                {
+                    flip = 180;
+                }
+                return Quaternion.Euler(0, flip, 0);
+            }
+            if (upt == 2 || upt == 1)
+            {
+                if (rightt == 4 || rightt == 3)
+                {
+                    flip = 180;
+                }
+                return Quaternion.Euler(0, flip, 180);
+            }
+
         }
 
         return Quaternion.identity;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 }
