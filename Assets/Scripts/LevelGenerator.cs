@@ -44,7 +44,7 @@ public class LevelGenerator : MonoBehaviour
             for (int y = 0; y < levelMap.GetLength(1) * 2; y++)
             {
                 placeTile(x, y);
-
+                
             }
         }
     }
