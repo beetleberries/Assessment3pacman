@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[ExecuteInEditMode]
 public class LevelGenerator : MonoBehaviour
 {
 
+    
     private int[,] levelMap =
  {
  {1,2,2,2,2,2,2,2,2,2,2,2,2,7},
@@ -28,13 +30,30 @@ public class LevelGenerator : MonoBehaviour
     public Tile[] tiles;
 
     public Tilemap tilemap;
+
+    public GameObject powerpellet;
     
+
+    // Awake is called when editor opens (execute in edit mode)
+    void Awake()
+    {
+
+        foreach (Transform child in transform) {
+	        DestroyImmediate(child.gameObject);
+        }
+        tilemap.ClearAllTiles();
+        BuildLevel();      
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-
-        BuildLevel();        
+        
+        foreach (Transform child in transform) {
+	        DestroyImmediate(child.gameObject);
+        }
+        tilemap.ClearAllTiles();
+        BuildLevel();
     }
 
     void BuildLevel()
@@ -52,7 +71,12 @@ public class LevelGenerator : MonoBehaviour
     private void placeTile(int x, int y)
     {
         int type = readMap(x,y);
-
+        if (type == 6)
+        {
+            GameObject pellet = Instantiate(powerpellet, new Vector3(y + 0.5f, -x + 0.5f, 0), Quaternion.identity);
+            pellet.transform.parent = transform; 
+            return;
+        }
         tilemap.SetTile(new Vector3Int(y, -x, 0), tiles[type]);
         Matrix4x4 m = Matrix4x4.Rotate(getRotation(type, x, y));
         tilemap.SetTransformMatrix(new Vector3Int(y, -x, 0),m);
