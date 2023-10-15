@@ -8,7 +8,8 @@ using UnityEngine.AI;
 public class PacStudentController : MonoBehaviour
 {
     public GameObject dirtparticle;
-    public AudioSource audioplayer;
+    public AudioSource audiomoveplayer;
+    public AudioSource audioeatplayer;
 
     public Animator animator;
 
@@ -56,14 +57,17 @@ public class PacStudentController : MonoBehaviour
         if (levelint < 5 && levelint != 0) 
         {
             animator.SetFloat("animationspeed", 0);
-            audioplayer.mute = true;
+            audiomoveplayer.mute = true;
             dirtparticle.SetActive(false);
+            
 
             return;
         }
+        //audioeatplayer.Pause();
+        if (levelint == 5) audioeatplayer.Play();
 
         animator.SetFloat("animationspeed", 1);
-        audioplayer.mute = false;
+        audiomoveplayer.mute = false;
         dirtparticle.SetActive(true);
 
         position = nextposition;

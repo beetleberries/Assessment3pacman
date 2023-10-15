@@ -85,6 +85,10 @@ public class LevelGenerator : MonoBehaviour
     public void removeTile(int x, int y)
     {
         tilemap.SetTile(new Vector3Int(y, -x, 0), null);
+
+        x = (x >= levelMap.GetLength(0)) ? levelMap.GetLength(0) * 2 - 2 - x : x;
+        y = (y >= levelMap.GetLength(1)) ? levelMap.GetLength(1) * 2 - 1 - y : y;
+        levelMap[x,y] = 0;
     }
 
     public int readMap(int x, int y)
