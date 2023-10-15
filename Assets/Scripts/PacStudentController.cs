@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class PacStudentController : MonoBehaviour
 {
+    public GameObject dirtparticle;
     public AudioSource audioplayer;
 
     public Animator animator;
@@ -56,14 +57,21 @@ public class PacStudentController : MonoBehaviour
         {
             animator.SetFloat("animationspeed", 0);
             audioplayer.mute = true;
+            dirtparticle.SetActive(false);
+
             return;
         }
 
         animator.SetFloat("animationspeed", 1);
         audioplayer.mute = false;
+        dirtparticle.SetActive(true);
+
         position = nextposition;
         nextposition = nextposition + currentInput;
         movedpercent = 0;
+        
+
+        level.removeTile(-levelcoords.y,levelcoords.x); //DESROY TILES YOU HAVE MOVED ON
     }
 
     private void getinput()
