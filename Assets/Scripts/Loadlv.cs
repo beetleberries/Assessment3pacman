@@ -12,6 +12,12 @@ public class Loadlv : MonoBehaviour
     public float time;
     public Text timetext;
 
+    public void addScore(int added)
+    {
+        score += added;
+        scoretext.text = "Score: " + score;
+    }
+
     public void LoadLevelOne()
     {
         SceneManager.LoadScene("Recreation");

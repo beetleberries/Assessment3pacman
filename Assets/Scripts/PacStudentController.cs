@@ -7,6 +7,10 @@ using UnityEngine.AI;
 
 public class PacStudentController : MonoBehaviour
 {
+    public Loadlv userinterface;
+    public AudioSource audiocollideplayer;
+
+    public ParticleSystem collide;
     public GameObject dirtparticle;
     public AudioSource audiomoveplayer;
     public AudioSource audioeatplayer;
@@ -56,25 +60,32 @@ public class PacStudentController : MonoBehaviour
 
         if (levelint < 5 && levelint != 0) 
         {
+            if (!audiomoveplayer.mute) 
+            {
+                audiocollideplayer.Play();
+                collide.transform.position = nextposition + currentInput / 2f;
+                collide.Play();
+            }
             animator.SetFloat("animationspeed", 0);
             audiomoveplayer.mute = true;
             dirtparticle.SetActive(false);
             
-
             return;
         }
-        //audioeatplayer.Pause();
-        if (levelint == 5) audioeatplayer.Play();
+        
+        audioeatplayer.Pause();
+        if (levelint == 5 && dirtparticle.activeInHierarchy) audioeatplayer.Play();
 
         animator.SetFloat("animationspeed", 1);
-        audiomoveplayer.mute = false;
+        
         dirtparticle.SetActive(true);
+        audiomoveplayer.mute = false;
 
         position = nextposition;
         nextposition = nextposition + currentInput;
         movedpercent = 0;
         
-
+        if (levelint == 5) userinterface.addScore(10);
         level.removeTile(-levelcoords.y,levelcoords.x); //DESROY TILES YOU HAVE MOVED ON
     }
 
@@ -84,12 +95,11 @@ public class PacStudentController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S)) {lastInput = Vector3.down; target = 1;}
         if (Input.GetKeyDown(KeyCode.A)) {lastInput = Vector3.left; target = 2;}
         if (Input.GetKeyDown(KeyCode.D)) {lastInput = Vector3.right; target = 0;}
-        
     }
 
     private void move()
     {
-        movedpercent += movespeed;
+        movedpercent += movespeed * Time.deltaTime;
         if (movedpercent > 1)
         {
             transform.position = nextposition;
@@ -97,4 +107,14 @@ public class PacStudentController : MonoBehaviour
         }
         transform.position = Vector3.Lerp(position, nextposition, movedpercent);
     } 
+
+    void OnCollisionEnter(Collision collision)
+    {
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            Debug.DrawRay(contact.point, contact.normal, Color.white);
+            //contact
+        }
+
+    }
 }
