@@ -85,8 +85,8 @@ public class PacStudentController : MonoBehaviour
         nextposition = nextposition + currentInput;
         movedpercent = 0;
         
-        if (levelint == 5) userinterface.addScore(10);
-        level.removeTile(-levelcoords.y,levelcoords.x); //DESROY TILES YOU HAVE MOVED ON
+        //if (levelint == 5) userinterface.addScore(10);
+        //level.removeTile(-levelcoords.y,levelcoords.x); //DESROY TILES YOU HAVE MOVED ON
     }
 
     private void getinput()
@@ -108,12 +108,32 @@ public class PacStudentController : MonoBehaviour
         transform.position = Vector3.Lerp(position, nextposition, movedpercent);
     } 
 
-    void OnCollisionEnter(Collision collision)
+    public void teleport(Vector3 location)
     {
-        foreach (ContactPoint contact in collision.contacts)
+        transform.position = location;
+        position = location;
+        nextposition = position + currentInput;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        //ContactPoint contact = collision.contacts[0];
+        //GameObject other = contact.otherCollider.gameObject;
+        GameObject other = collision.gameObject;
+        if (other.name == "pellet(Clone)")
         {
-            Debug.DrawRay(contact.point, contact.normal, Color.white);
-            //contact
+            userinterface.addScore(10);
+            Destroy(other);
+        }
+        if (other.name == "power pellet(Clone)")
+        {
+            Destroy(other);
+        }
+        if (other.name == "cherry(Clone)")
+        {
+            userinterface.addScore(100);
+            Destroy(other);
         }
 
     }

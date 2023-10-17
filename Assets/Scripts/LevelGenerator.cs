@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[ExecuteInEditMode]
 public class LevelGenerator : MonoBehaviour
 {
 
@@ -32,17 +31,17 @@ public class LevelGenerator : MonoBehaviour
     public Tilemap tilemap;
 
     public GameObject powerpellet;
+    public GameObject pellet;
     
 
     // Awake is called when editor opens (execute in edit mode)
     void Awake()
     {
-
-        foreach (Transform child in transform) {
-	        DestroyImmediate(child.gameObject);
-        }
-        tilemap.ClearAllTiles();
-        BuildLevel();      
+        //foreach (Transform child in transform) {
+	    //    DestroyImmediate(child.gameObject);
+        //}
+        //tilemap.ClearAllTiles();
+        //BuildLevel();      
     }
 
     // Start is called before the first frame update
@@ -50,7 +49,7 @@ public class LevelGenerator : MonoBehaviour
     {
         
         foreach (Transform child in transform) {
-	        DestroyImmediate(child.gameObject);
+	        Destroy(child.gameObject);
         }
         tilemap.ClearAllTiles();
         BuildLevel();
@@ -73,8 +72,14 @@ public class LevelGenerator : MonoBehaviour
         int type = readMap(x,y);
         if (type == 6)
         {
-            GameObject pellet = Instantiate(powerpellet, new Vector3(y + 0.5f, -x + 0.5f, 0), Quaternion.identity);
-            pellet.transform.parent = transform; 
+            GameObject powerpelletobj = Instantiate(powerpellet, new Vector3(y + 0.5f, -x + 0.5f, 0), Quaternion.identity);
+            powerpelletobj.transform.parent = transform; 
+            return;
+        }
+        if (type == 5)
+        {
+            GameObject pelletobj = Instantiate(pellet, new Vector3(y + 0.5f, -x + 0.5f, 0), Quaternion.identity);
+            pelletobj.transform.parent = transform; 
             return;
         }
         tilemap.SetTile(new Vector3Int(y, -x, 0), tiles[type]);
@@ -84,6 +89,7 @@ public class LevelGenerator : MonoBehaviour
 
     public void removeTile(int x, int y)
     {
+        //dont use this to remove pellets it will remove in 4 locations cause map is flipped and mirrored
         tilemap.SetTile(new Vector3Int(y, -x, 0), null);
 
         x = (x >= levelMap.GetLength(0)) ? levelMap.GetLength(0) * 2 - 2 - x : x;

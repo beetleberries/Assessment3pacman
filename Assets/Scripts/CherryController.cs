@@ -8,7 +8,7 @@ public class CherryController : MonoBehaviour
     public GameObject cherry;
     private GameObject currentcherry;
     private Vector2 cherrystart;
-    private float instatiatetimer;
+    private float instatiatetimer = 9f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class CherryController : MonoBehaviour
     private void SpawnCherry()
     {
         Destroy(currentcherry);
-        cherrystart = Random.insideUnitCircle * 40f;
+        cherrystart = Random.insideUnitCircle.normalized * 40f;
         currentcherry = Instantiate(cherry, cherrystart, Quaternion.identity);
     }
 
